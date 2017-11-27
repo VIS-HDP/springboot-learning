@@ -1,5 +1,6 @@
 package com.vis.learn;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-    @GetMapping("/api/say")
+    @CrossOrigin
+    @GetMapping("/users")
     public String sayHello(){
-        return "Hello Springboot123!";
+        System.out.println(" enter sayHello ...111 ");
+        return "Springboot1233";
     }
 }
