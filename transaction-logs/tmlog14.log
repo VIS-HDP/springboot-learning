@@ -1,0 +1,2 @@
+{"id":"txmanager153138958854200001","wasCommitted":true,"participants":[{"uri":"txmanager1","state":"COMMITTING","expires":1531389599150,"resourceName":"one-ds"},{"uri":"txmanager2","state":"COMMITTING","expires":1531389599150,"resourceName":"two-ds"}]}
+{"id":"txmanager153138958854200001","wasCommitted":true,"participants":[{"uri":"txmanager1","state":"TERMINATED","expires":1531389599166,"resourceName":"one-ds"},{"uri":"txmanager2","state":"TERMINATED","expires":1531389599166,"resourceName":"two-ds"}]}

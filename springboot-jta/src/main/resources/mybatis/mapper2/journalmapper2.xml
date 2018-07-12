@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vis.demo.jta.busmapper.JournalSecondMapper" >
+    <resultMap id="BaseResultMap" type="com.vis.demo.jta.vo.JournalVO" >
+        <id column="journal_id" property="journal_id" jdbcType="VARCHAR" />
+        <result column="journal_name" property="journal_name" jdbcType="VARCHAR" />
+        <result column="journal_type" property="journal_type" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        journal_id, journal_name, journal_type
+    </sql>
+
+    <select id="getAll" resultMap="BaseResultMap"  >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM bd_journal
+    </select>
+
+    <select id="getOne" parameterType="java.lang.String" resultMap="BaseResultMap" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM bd_journal
+        WHERE journal_id = #{id}
+    </select>
+    <insert id="insertOne" >
+        INSERT INTO bd_journal (JOURNAL_ID, JOURNAL_NAME, JOURNAL_CODE) VALUES
+        (#{journal.journal_id},#{journal.journal_name},#{journal.journal_code})
+    </insert>
+
+    <update id="updateOne"  >
+        UPDATE  bd_journal
+        <set>
+            <if test="journal.journal_name != null ">journal_name = #{journal.journal_name},</if>
+            <if test="journal.journal_type != null ">journal_type = #{journal.journal_type}</if>
+        </set>
+        where journal_id =#{journal.journal_id}
+    </update>
+
+</mapper>
