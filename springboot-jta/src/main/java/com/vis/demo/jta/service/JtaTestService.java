@@ -24,7 +24,7 @@ public class JtaTestService {
         rows += jtaTest3();
        // }catch(RuntimeException e){e.printStackTrace();}
         String[] s = new String[2];
-        //s[3] = "";
+        s[3] = "";
         System.out.println("更新记录总数 f:"+rows);
         return rows;
     }
