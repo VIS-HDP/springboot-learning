@@ -1,6 +1,9 @@
 package com.example.springbooredis;
 
 import com.example.entity.User;
+import com.example.utils.RedisLock;
+import com.example.utils.RedisLock2;
+import com.example.utils.RedisLockInfo;
 import com.example.utils.RedisUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +17,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 import java.util.Set;
@@ -29,9 +33,27 @@ public class RedisTest {
     RedisTemplate<String,Object> redisTemplate;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    RedisLock redisLock;
+    @Autowired
+    RedisLock2 redisLock2;
+
+    //@Test
+    public void RedisLockTest(){
+        RedisLockInfo redisLockInfo = redisLock.tryLock("lockKey",50000,1000);
+        System.out.println("redesLock="+redisLockInfo.getRedisKey()+",,,"+redisLockInfo.getTryCount());
+        System.out.println("释放锁="+redisLock.releaseLock(redisLockInfo));
+    }
 
     @Test
+    public void RedisLock2Test(){
+        boolean result = redisLock2.setNx("lockkey2","requestid",30);
+        System.out.println("RedisLock2Test="+result);
+        System.out.println("RedisLock2Test释放锁="+redisLock2.releaseDistributedLock("lockkey2","requestid"));
+    }
+    //@Test
     public void test(){
+
         String name = "mysort";
         long start = System.currentTimeMillis();
         if(redisTemplate.opsForZSet().size(name)<=0){

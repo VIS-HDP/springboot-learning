@@ -528,4 +528,53 @@ public class RedisUtil {
         }
     }
 
+
+    //===============================zset=================================
+
+    /**
+     * 有序集合(sorted set) 放入集合
+     * @param key 键
+     * @param value 值
+     * @param score 排序值
+     * @return
+     */
+    public boolean zAdd(String key, Object value, double score) {
+        try {
+            redisTemplate.opsForZSet().add(key,value,score);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    /**
+     * 获取 sorted set 集合个数
+     * @param key 键
+     * @return
+     */
+    public Long zCount(String key) {
+        try {
+            return redisTemplate.opsForZSet().size(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1L;
+        }
+    }
+
+    /**
+     * 根据索引 ，获取 sorted set 集合 ，index start from 0, score is sorted low to high
+     * @param key 键
+     * @param
+     * @return
+     */
+    public Set<Object> range(String key,long start,long end ) {
+        try {
+            return  redisTemplate.opsForZSet().range(key,start,end);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

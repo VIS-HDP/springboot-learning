@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.entity.User;
 import com.example.utils.RedisUtil;
 import org.json.JSONArray;
 import org.slf4j.Logger;
@@ -10,9 +11,16 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * nohup java -jar springbooredis-0.0.1-SNAPSHOT.jar > log.file 2>&1 &
+ * java -jar  lqyspringboot-0.0.1-SNAPSHOT.jar --spring.profiles.active=dev
+ *
+ */
 @RestController
 public class MyController {
     Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -58,35 +66,36 @@ public class MyController {
 
         return "Hello";
     }
+
+    /**init=132492,rangebyScore=46
+     *
+     *  init=7044,rangebyScore=50
+     *init=9366,rangebyScore=56
+     **/
     @RequestMapping("/sort")
     String helloSort(){
-
-        //redisTemplate.opsForZSet().remove("mysort");
-        redisTemplate.expire("mytest",30,TimeUnit.SECONDS);
-
-/*        redisTemplate.opsForZSet().add("mysort","j",4);
-        redisTemplate.opsForZSet().add("mysort","o",3);
-        redisTemplate.opsForZSet().add("mysort","a",6);
-        redisTemplate.opsForZSet().add("mysort","g",1);
-        redisTemplate.opsForZSet().add("mysort","a",2);
-        redisTemplate.opsForZSet().add("mysort","i",5);
-        redisTemplate.opsForZSet().add("mysort","n",7);*/
-
-
-        //https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/ZSetOperations.html
-        //Get elements where score is between min and max from sorted set ordered from high to low.
-        //Get elements in range from start to end where score is between min and max from sorted set ordered high -> low.
-        //redisTemplate.opsForZSet().reverseRangeByScore();
-
-        //Intersect sorted sets at key and otherKey and store result in destination destKey.
-        //redisTemplate.opsForZSet().intersectAndStore();
+        logger.info("=======start======");
+        String name = "mysort";
+        long start = System.currentTimeMillis();
+        if(redisTemplate.opsForZSet().size(name)<=0){
+            Random r = new Random();
+            for(int i=0;i<10000;i++){
+                int score = r.nextInt(10000);
+                User user = new User(new Long(i),score, "测试zset",new Date());
+                redisTemplate.opsForZSet().add(name,user,score);
+            }
+        }
+        long middle = System.currentTimeMillis();
         //rangeByScore  Get elements in range from start to end where score is between min and max from sorted set.
-        Set<Object> ret = redisTemplate.opsForZSet().rangeByScore("mysort",2,3);
+        //Set<Object> ret = redisTemplate.opsForZSet().rangeByScore(name,2,3);
+
+        Set<Object> ret = redisTemplate.opsForZSet().range(name,0,19);
+        long end =  System.currentTimeMillis();
+        System.out.println("init="+(middle-start)+",rangebyScore="+(end-middle));
+        logger.info("init="+(middle-start)+",rangebyScore="+(end-middle));
         System.out.println(ret.toString());
 
-        // reverseRange Get elements in range from start to end from sorted set ordered from high to low.
-
-        return "Hello";
+        return "Hello,successful ! sort ";
     }
 
 
