@@ -8,6 +8,8 @@ public class User implements Serializable{
     private int type;
     private String user_name;
     private String user_addr;
+    private Double lat;
+    private Double lng;
     private Date createTime;
     public User(){
         super();
@@ -17,6 +19,12 @@ public class User implements Serializable{
         this.type = type;
         this.user_name = user_name;
         this.createTime = createTime;
+    }
+    public User(Long id  ,String user_name,Double lat,Double lng){
+        this.id = id;
+        this.lat = lat;
+        this.user_name = user_name;
+        this.lng = lng;
     }
     public Long getId() {
         return id;
@@ -61,6 +69,23 @@ public class User implements Serializable{
     @Override
     public String toString() {
         return "id="+this.id+",name="+this.user_name+
-                ",type="+this.type+",createTime="+this.createTime;
+                ",type="+this.type+",createTime="+this.createTime+
+                ",lat="+this.lat+",lng="+this.lng;
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
     }
 }
