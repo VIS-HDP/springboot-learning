@@ -42,7 +42,7 @@ public class RedisTest {
     @Autowired
     RedisLock2 redisLock2;
 
-    @Test
+    //@Test
     // redis geohash test 附近的服务。
     public void geoHashTest(){
         ArrayList<RedisGeoCommands.GeoLocation<Object>> list = new ArrayList<>();
@@ -84,7 +84,7 @@ public class RedisTest {
         System.out.println("RedisLock2Test="+result);
         System.out.println("RedisLock2Test释放锁="+redisLock2.releaseDistributedLock("lockkey2","requestid"));
     }
-    //@Test
+    @Test
     public void test(){
 
         String name = "mysort";

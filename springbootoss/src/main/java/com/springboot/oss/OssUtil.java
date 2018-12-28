@@ -127,4 +127,8 @@ public class OssUtil {
         logger.info("imgUrl="+imgUrl);
         return imgUrl;
     }
+
+    public static void main(String[] args) {
+
+    }
 }
