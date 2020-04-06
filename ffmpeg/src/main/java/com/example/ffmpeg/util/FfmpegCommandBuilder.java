@@ -191,8 +191,8 @@ public class FfmpegCommandBuilder {
 		fcb.addCommand(time);
 		fcb.addInputFileCommand(src);
 		fcb.addCommand("-vcodec");
-		//fcb.addCommand("copy");
-		fcb.addCommand("h264");  //指定编码为播放器可支持的编码  无特殊要求填copy  copy表示复制原编码
+		fcb.addCommand("copy");
+		//fcb.addCommand("h264");  //指定编码为播放器可支持的编码  无特殊要求填copy  copy表示复制原编码
 		fcb.addCommand("-acodec");
 		fcb.addCommand("copy");
 		fcb.addCommand(dest);
